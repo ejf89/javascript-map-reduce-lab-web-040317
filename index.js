@@ -9000,3 +9000,71 @@ const issues = [
     "url": "https://api.github.com/repos/learn-co-curriculum/js-donut-lab/issues/2"
   }
 ];
+
+var issuesWithUpdatedApiUrl = []
+ issuesWithUpdatedApiUrl = issues.map(function (issue) {
+            return Object.assign({}, issue, {
+                url: issue.url.replace(/api.github.com/, 'api-v2.github.com')
+            })
+        })
+
+var commentCountAcrossIssues = []
+    commentCountAcrossIssues = issues.map( function(issue){
+        return issue.comments_count
+    })
+
+    commentCountAcrossIssues =  commentCountAcrossIssues.reduce( function(a, b) {
+
+        return a + b
+
+    }, 0)
+
+var openIssues = []
+
+    openIssues = issues.map( function(issue) {
+        if (issue.state === "open"){
+            return issue
+        }
+    })
+
+    openIssues =  openIssues.filter( function(issue){
+        if( typeof issue === "object"){return issue}
+    })
+
+    var nonAutomaticIssues = []
+
+        nonAutomaticIssues = openIssues.filter( function(issue){
+            if( !issue.body.includes("automatically")){return issue}
+        })
+
+
+        // table = $("table thead")
+        // const table = document.querySelector("table")
+        const table = document.getElementById("results")
+
+        // $( document ).ready(function() {
+            nonAutomaticIssues.map(function (issue){
+                var newRow = document.createElement("tr")
+
+                var data1 = document.createElement("td")
+                var data2 = document.createElement("td")
+                var data3 = document.createElement("td")
+
+                data1.innerHTML = issue.body
+                data2.innerHTML = issue.created_at
+                data3.innerHTML = issue.state
+
+                newRow.appendChild(data1)
+                newRow.appendChild(data2)
+                newRow.appendChild(data3)
+
+                table.appendChild(newRow)
+
+            })
+
+        // });
+
+
+// function appendToTable(array){
+//
+// }
